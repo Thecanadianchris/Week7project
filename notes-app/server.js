@@ -38,7 +38,41 @@ app.post("/api/notes", (req, res) => {
   writeNotes(notes);
   res.json(newNote);
 });
+app.put("/api/notes/:id", (req, res) => {
+  const notes = readNotes();
+  const index = notes.findIndex(function(n) {
+    return n.id === req.params.id;
+  });
 
+  if (index === -1) {
+    return res.status(404).json({ message: "note not found" });
+  }
+
+  if (req.body.text !== undefined) {
+    notes[index].text = req.body.text;
+  }
+  if (req.body.completed !== undefined) {
+    notes[index].completed = req.body.completed;
+  }
+
+  writeNotes(notes);
+  res.json(notes[index]);
+});
+
+app.delete("/api/notes/:id", (req, res) => {
+  const notes = readNotes();
+  const index = notes.findIndex(function(n) {
+    return n.id === req.params.id;
+  });
+
+  if (index === -1) {
+    return res.status(404).json({ message: "note not found" });
+  }
+
+  const deleted = notes.splice(index, 1);
+  writeNotes(notes);
+  res.json({ message: "note deleted", note: deleted[0] });
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
