@@ -43,16 +43,42 @@ fetch("/api/notes", {
 
 function addNoteToPage(id, taskText, dateAdded) {
   var taskList = document.getElementById("taskList");
+
+
   var newTaskItem = document.createElement("li");
-  var checkbox = document.createElement("input");
-  checkbox.type = "checkbox";
-  newTaskItem.appendChild(checkbox);
-  var taskLabel = document.createTextNode(taskText);
+
+
+var checkbox = document.createElement("input");
+checkbox.type = "checkbox";
+checkbox.addEventListener("change", function() {
+  fetch("/api/notes/" + id, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ completed: checkbox.checked })
+  });
+
+  if (checkbox.checked) {
+    taskLabel.style.textDecoration = "line-through";
+  } else {
+    taskLabel.style.textDecoration = "none";
+  }
+});
+newTaskItem.appendChild(checkbox);
+
+
+var taskLabel = document.createElement("span");
+taskLabel.textContent = taskText;
+
+
   newTaskItem.appendChild(taskLabel);
+
+
   var dateLabel = document.createElement("span");
   dateLabel.textContent = " - " + dateAdded;
   dateLabel.style.marginLeft = "10px";
   newTaskItem.appendChild(dateLabel);
+
+
   var editButton = document.createElement("button");
   editButton.textContent = "Edit Note";
 editButton.addEventListener("click", function() {
