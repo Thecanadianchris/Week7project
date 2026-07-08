@@ -18,6 +18,15 @@ function onClickSaveNote() {
     document.getElementById("voidentry").style.display = "block";
   } else {
     document.getElementById("voidentry").style.display = "none";
+   
+     // New Code // 
+    fetch("/api/notes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: taskText })
+    });
+    
+  
     var taskList = document.getElementById("taskList");
     var newTaskItem = document.createElement("li");
     var checkbox = document.createElement("input");
