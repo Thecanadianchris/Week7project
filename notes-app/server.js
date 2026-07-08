@@ -1,6 +1,20 @@
 const express = require("express");
 const app = express();
+const fs = require("fs");
+const path = require("path");
+const { v4: uuidv4 } = require("uuid");
 const PORT = 3001;
+const dataFilePath = path.join(__dirname, "data.json");
+
+function readNotes() {
+  const data = fs.readFileSync(dataFilePath);
+  return JSON.parse(data);
+}
+
+function writeNotes(notes) {
+  fs.writeFileSync(dataFilePath, JSON.stringify(notes, null, 2));
+}
+
 
 app.use(express.json());
 
