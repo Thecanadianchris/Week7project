@@ -21,6 +21,24 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("notes app is alive");
 });
+app.get("/api/notes", (req, res) => {
+  const notes = readNotes();
+  res.json(notes);
+});
+
+app.post("/api/notes", (req, res) => {
+  const notes = readNotes();
+  const newNote = {
+    id: uuidv4(),
+    text: req.body.text,
+    completed: false,
+    createdAt: new Date().toISOString()
+  };
+  notes.push(newNote);
+  writeNotes(notes);
+  res.json(newNote);
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

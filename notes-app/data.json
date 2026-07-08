@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "id": "f1bebc41-4fc3-48ee-96c2-2036ff8ccc90",
+    "text": "buy milk",
+    "completed": false,
+    "createdAt": "2026-07-08T11:23:03.923Z"
+  }
+]
