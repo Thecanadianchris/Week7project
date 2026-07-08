@@ -69,5 +69,15 @@ editButton.addEventListener("click", function() {
   }
 });
   newTaskItem.appendChild(editButton);
+var deleteButton = document.createElement("button");
+deleteButton.textContent = "Delete";
+deleteButton.addEventListener("click", function() {
+  fetch("/api/notes/" + id, { method: "DELETE"
+  });
+  newTaskItem.remove();
+});
+newTaskItem.appendChild(deleteButton);
+
+
   taskList.appendChild(newTaskItem);
 }
